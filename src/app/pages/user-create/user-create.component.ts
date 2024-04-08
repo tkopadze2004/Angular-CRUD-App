@@ -34,7 +34,7 @@ activatedRoute=inject(ActivatedRoute)
   // };
   form = new FormGroup({
     id:new FormControl(''),
-    firstName: new FormControl('',Validators.required),
+    firstName: new FormControl<string>('',Validators.required),
     lastName: new FormControl('',Validators.required),
     birthDate: new FormControl('',Validators.required),
     phone: new FormControl('',[Validators.required,Validators.minLength(8)]),
