@@ -1,0 +1,33 @@
+ <div class="container">
+ <div class="main">
+<table>
+  <tr>
+    <div  class="conta">
+    <td><h3>Firstname</h3></td>
+    <td><h3>Lastname </h3></td>
+    <td><h3>birthdate</h3> </td>
+    <td><h3>phone  number</h3></td>
+  </div>
+  <div class="line"> </div>
+  </tr>
+@for(user of users$ | async; track user.id ; let i=$index) {
+  <tr>
+   <div  class="conta">
+<td> {{ i+ 1}}- {{user.firstName}}</td>
+<td>{{user.lastName}}</td>
+<td>{{user.birthDate}}</td>
+<td>{{user.phone}} </td>
+<div class="btn">
+  <button  [routerLink]="['/create',user.id]" >Edit</button>
+  <button (click)="delete(user.id)">Delete</button>
+</div>
+</div>
+</tr>
+}
+<h1><a [routerLink]="['/']" >Create user</a></h1>
+
+</table>
+</div>
+</div>
+
+

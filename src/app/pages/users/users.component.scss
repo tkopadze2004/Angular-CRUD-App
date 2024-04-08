@@ -1,0 +1,23 @@
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: start;
+
+}
+.main{
+  display: flex;
+  align-items: start;
+  width: 1000px;
+  height: 100vh;
+ justify-content: center;
+  background-color: #bfbfbf;
+}
+.conta{
+  display: flex;
+  gap: 50px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid black;
+}
+.btn{
+margin-left: 20px;
+}

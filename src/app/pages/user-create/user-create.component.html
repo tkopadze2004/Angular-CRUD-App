@@ -1,0 +1,190 @@
+<form class="example-form" [formGroup]="form">
+  <div>
+    <h1>Registration form</h1>
+    @if(user$|async; as user){
+    <h3>Edit user {{ user?.firstName }}</h3>
+    } @else{
+    <h3>create user</h3>
+    }
+  </div>
+  <div class="line"></div>
+  <br />
+  <div class="conts">
+    <mat-form-field class="input">
+      <mat-label>FirstName</mat-label>
+      <input matInput formControlName="firstName" />
+      @if(form.get('firstName')?.hasError('required') &&
+      form.get('firstName')?.touched){
+      <div class="error">firstName is required</div>
+      }
+    </mat-form-field>
+    <mat-form-field class="input">
+      <mat-label>LastName</mat-label>
+      <input matInput formControlName="lastName" />
+      @if(form.get('lastName')?.hasError('required') &&
+      form.get('lastName')?.touched){
+      <div class="error">lastName is required</div>
+      }
+    </mat-form-field>
+  </div>
+  <div class="conts">
+    <mat-form-field>
+      <mat-label>BirthDate</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="birthDate" />
+      @if(form.get('birthDate')?.hasError('required') &&
+      form.get('birthDate')?.touched){
+      <div class="error">birthDate is required</div>
+      }
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="input">
+      <mat-label>Phone</mat-label>
+      <input matInput type="tel" formControlName="phone" />
+      @if (form.get('phone')?.invalid && form.get('phone')?.touched) { @if
+      (form.get('phone')?.getError('required')) {
+      <div class="error">Number is required</div>
+      } @if (form.get('phone')?.getError('minlength')) {
+      <div class="error">Min length is 8</div>
+      } }
+    </mat-form-field>
+  </div>
+  <div formGroupName="address">
+    <div class="text">Your address:</div>
+    <div class="conts">
+      <mat-form-field class="input">
+        <mat-label>City</mat-label>
+        <input matInput formControlName="city" />
+        @if(form.get('address.city')?.hasError('required') &&
+        form.get('address.city')?.touched){
+        <div class="error">city is required</div>
+        }
+      </mat-form-field>
+      <mat-form-field class="input">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" />
+        @if(form.get('address.address')?.hasError('required') &&
+        form.get('address.address')?.touched){
+        <div class="error">address is required</div>
+        }
+      </mat-form-field>
+    </div>
+  </div>
+  <br />
+  <div class="conts">
+    <div class="text">
+      Your skills:
+      <button
+        mat-raised-button
+        (click)="addSkill()"
+        [ngStyle]="{ 'background-color': '#5a7ea6' }"
+        class="button"
+      >
+        Add Skills
+      </button>
+    </div>
+  </div>
+  <div formArrayName="skills">
+    <div class="skills">
+      @for(control of skills.controls ; track control; let i=$index ){
+      <div [formGroupName]="i">
+        <mat-form-field class="input">
+          <mat-label>Skill</mat-label>
+          <input matInput formControlName="skill" />
+          @if(skills.controls[i].get('skill')?.hasError('required') &&
+          skills.controls[i].get('skill')?.touched){
+          <div class="error">Skill is required</div>
+          }
+        </mat-form-field>
+        <button
+          mat-button
+          class="delete"
+          [ngStyle]="{ 'background-color': ' whitesmoke', color: 'black' }"
+          [ngStyle]="{ 'background-color': ' #6c7b8b' }"
+          (click)="deleteSkill(i)"
+        >
+          delete
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+
+  <br /><br />
+  <div>
+    <div formArrayName="workExperiance">
+      <div class="text">
+        Your Experiance :
+        <button
+          mat-raised-button
+          (click)="addexperiance()"
+          [ngStyle]="{ 'background-color': '#5a7ea6', width: '70px' }"
+          class="button"
+        >
+          Add
+        </button>
+      </div>
+      <div class="skills">
+        @for(control of workExperiance.controls ; track control; let i=$index ){
+        <div [formGroupName]="i">
+          <mat-form-field class="input">
+            <mat-label>Workplace</mat-label>
+            <input matInput formControlName="workplace" />
+            @if(workExperiance.controls[i].get('workplace')?.hasError('required')
+            && workExperiance.controls[i].get('workplace')?.touched){
+            <div class="error">workExperiance is required</div>
+            }
+          </mat-form-field>
+        </div>
+        <div [formGroupName]="i">
+          <mat-form-field class="input">
+            <mat-label>Position</mat-label>
+            <input matInput formControlName="position" />
+            @if(workExperiance.controls[i].get('position')?.hasError('required')
+            && workExperiance.controls[i].get('position')?.touched){
+            <div class="error">position is required</div>
+            }
+          </mat-form-field>
+        </div>
+        <div [formGroupName]="i">
+          <!-- <mat-form-field class="example-full-width" class="input">
+          <mat-label>Period</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="period">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
+          @if(workExperiance.controls[i].get('period')?.hasError('required') && workExperiance.controls[i].get('period')?.touched){
+            <div class="error">period is required</div>
+          }
+        </mat-form-field> -->
+          <mat-form-field>
+            <mat-label>WorkTime</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="period" />
+            @if(form.get('period')?.hasError('required') &&
+            form.get('period')?.touched){
+            <div class="error">WorkTime is required</div>
+            }
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <button
+          mat-raised-button
+          (click)="deleteexperiance(i)"
+          [ngStyle]="{ 'background-color': ' #6c7b8b' }"
+          class="button"
+        >
+          delete
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+  <div class="line2"></div>
+  <button class="submit" (click)="Submit()">Submit form</button>
+</form>

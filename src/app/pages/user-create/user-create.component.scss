@@ -1,0 +1,80 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .example-form {
+    width: 1000px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: #bfbfbf;
+
+    .line {
+      border-bottom: 2px solid black;
+      width: 1000px;
+    }
+  }
+
+  .conts {
+    display: flex;
+    gap: 40px;
+  }
+
+  .input {
+    width: 257px;
+  }
+
+  .text {
+    font-size: 20px;
+    font-weight: 520;
+    margin-bottom: 2px;
+    color: rgb(67, 66, 66);
+  }
+
+  .button {
+    margin-left: 15px;
+  }
+
+  .delete {
+    height: 35px;
+    margin-left: 7px;
+    font-size: 13px;
+    width: 15px;
+  }
+
+  .skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding-top: 8px;
+    max-width: 890px;
+
+    .input {
+      width: 205px;
+    }
+  }
+
+  .submit {
+    width: 150px;
+    height: 50px;
+    margin: 10px 0 20px 0;
+    background-color: #5a7ea6;
+    border-radius: 12px;
+    border: none;
+    font-size: 20px;
+    font-weight: 550;
+    cursor: pointer;
+  }
+
+  .line2 {
+    margin-top: 20px;
+    border-bottom: 2px solid black;
+    width: 700px;
+  }
+
+  .error {
+    color: red;
+  }
+}
