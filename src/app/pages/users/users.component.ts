@@ -1,7 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { UserService } from '../../service/user.service';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -10,19 +11,20 @@ import { RouterLink } from '@angular/router';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent {
+export class UsersComponent implements OnDestroy {
 service=inject(UserService)
 users$=this.service.getUsers()
+subj$ = new Subject();
 
 
-// edit(id:number){
-// console.log(`id is ${id}`);
-// }
 delete(id:string){
-  // console.log(`id is ${id}`);
-   this.service.deleteUser(id).subscribe((res)=>{
-    //  console.log(res);
+   this.service.deleteUser(id).pipe(takeUntil(this.subj$))
+   .subscribe((res)=>{
      this.users$=this.service.getUsers()
    })
+}
+ngOnDestroy(): void {
+  this.subj$.next('null');
+  this.subj$.complete();
 }
 }
