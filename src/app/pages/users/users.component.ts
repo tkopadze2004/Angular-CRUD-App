@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { UserService } from '../../service/user.service';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgStyle } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [AsyncPipe,RouterLink],
+  imports: [AsyncPipe,RouterLink,NgStyle],
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
@@ -19,7 +19,7 @@ subj$ = new Subject();
 
 delete(id:string){
    this.service.deleteUser(id).pipe(takeUntil(this.subj$))
-   .subscribe((res)=>{
+   .subscribe(()=>{
      this.users$=this.service.getUsers()
    })
 }

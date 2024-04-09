@@ -19,20 +19,20 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { AsyncPipe, DatePipe, NgStyle } from '@angular/common';
+import { AsyncPipe, NgFor, NgStyle } from '@angular/common';
 import { UserService } from '../../service/user.service';
-import { User } from '../../models/user.interface';
+import { User } from '../../interface/user.interface';
 import { Subject, map, of, switchMap, takeUntil, tap } from 'rxjs';
+import { MatSelectModule } from '@angular/material/select';
 
 @Component({
   selector: 'app-user-create',
   standalone: true,
   imports: [
+    MatSelectModule,
     RouterOutlet,
     AsyncPipe,
-    DatePipe,
     RouterLink,
-    DatePipe,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
@@ -50,6 +50,9 @@ export class UserCreateComponent implements OnDestroy {
   service = inject(UserService);
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
+  subj$ = new Subject();
+  years: number[] = [];
+  currentYear: number = new Date().getFullYear();
 
   form = new FormGroup({
     id: new FormControl(''),
@@ -70,12 +73,11 @@ export class UserCreateComponent implements OnDestroy {
       new FormGroup({
         workplace: new FormControl('', Validators.required),
         position: new FormControl('', Validators.required),
-        period: new FormControl('', Validators.required),
+        startYear: new FormControl('', Validators.required),
+        endYear: new FormControl('', Validators.required),
       }),
     ]),
   });
-
-  subj$ = new Subject();
   user$ = this.activatedRoute.params.pipe(
     map((params) => params['id']),
     switchMap((id) => {
@@ -90,6 +92,20 @@ export class UserCreateComponent implements OnDestroy {
     })
   );
 
+  selectedPeriod(): string {
+    const startYear = this.form.get('startYear')?.value;
+    const endYear = this.form.get('endYear')?.value;
+    if (startYear && endYear) {
+      return `${startYear}-${endYear}`;
+    }
+    return '';
+  }
+
+  constructor() {
+    for (let i = this.currentYear; i >= this.currentYear - 100; i--) {
+      this.years.push(i);
+    }
+  }
   get skills() {
     return this.form.get('skills') as FormArray;
   }
@@ -107,9 +123,10 @@ export class UserCreateComponent implements OnDestroy {
 
   addexperiance() {
     const newexperiance = new FormGroup({
-      workplace: new FormControl(''),
-      position: new FormControl(''),
-      period: new FormControl(''),
+      workplace: new FormControl('', Validators.required),
+      position: new FormControl('', Validators.required),
+      startYear: new FormControl('', Validators.required),
+      endYear: new FormControl('', Validators.required),
     });
     this.workExperiance.push(newexperiance);
   }
@@ -124,7 +141,6 @@ export class UserCreateComponent implements OnDestroy {
   Submit() {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
-    console.log(this.form.value);
 
     const {
       id,

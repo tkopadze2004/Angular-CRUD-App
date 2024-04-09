@@ -1,33 +1,43 @@
- <div class="container">
- <div class="main">
-<table>
-  <tr>
-    <div  class="conta">
-    <td><h3>Firstname</h3></td>
-    <td><h3>Lastname </h3></td>
-    <td><h3>birthdate</h3> </td>
-    <td><h3>phone  number</h3></td>
+<div class="container">
+  <div class="main">
+    <table>
+      <tr>
+        <div class="cont">
+          <td><h3>Firstname</h3></td>
+          <td><h3>Lastname</h3></td>
+          <td><h3>birthdate</h3></td>
+          <td class="last"><h3>phone number</h3></td>
+        </div>
+      </tr>
+      @for(user of users$ | async; track user.id ; let i=$index) {
+      <tr>
+        <div class="cont">
+          <td>{{ i + 1 }}- {{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.birthDate }}</td>
+          <td>{{ user.phone }}</td>
+          <div class="btn">
+            <button
+              mat-raised-button
+              [routerLink]="['/create', user.id]"
+              [ngStyle]="{ 'background-color': '#5a7ea6' }"
+              class="button"
+            >
+              Edit
+            </button>
+            <button
+              mat-raised-button
+              (click)="delete(user.id)"
+              [ngStyle]="{ 'background-color': '#5a7ea6' }"
+              class="button"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </tr>
+      }
+      <h1><a [routerLink]="['/']">Create user</a></h1>
+    </table>
   </div>
-  <div class="line"> </div>
-  </tr>
-@for(user of users$ | async; track user.id ; let i=$index) {
-  <tr>
-   <div  class="conta">
-<td> {{ i+ 1}}- {{user.firstName}}</td>
-<td>{{user.lastName}}</td>
-<td>{{user.birthDate}}</td>
-<td>{{user.phone}} </td>
-<div class="btn">
-  <button  [routerLink]="['/create',user.id]" >Edit</button>
-  <button (click)="delete(user.id)">Delete</button>
 </div>
-</div>
-</tr>
-}
-<h1><a [routerLink]="['/']" >Create user</a></h1>
-
-</table>
-</div>
-</div>
-
-

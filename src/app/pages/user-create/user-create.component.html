@@ -102,7 +102,6 @@
         <button
           mat-button
           class="delete"
-          [ngStyle]="{ 'background-color': ' whitesmoke', color: 'black' }"
           [ngStyle]="{ 'background-color': ' #6c7b8b' }"
           (click)="deleteSkill(i)"
         >
@@ -112,7 +111,6 @@
       }
     </div>
   </div>
-
   <br /><br />
   <div>
     <div formArrayName="workExperiance">
@@ -150,27 +148,27 @@
           </mat-form-field>
         </div>
         <div [formGroupName]="i">
-          <!-- <mat-form-field class="example-full-width" class="input">
-          <mat-label>Period</mat-label>
-          <input matInput [matDatepicker]="picker" formControlName="period">
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker [dateClass]="dateClass" #picker></mat-datepicker>
-          @if(workExperiance.controls[i].get('period')?.hasError('required') && workExperiance.controls[i].get('period')?.touched){
-            <div class="error">period is required</div>
-          }
-        </mat-form-field> -->
           <mat-form-field>
-            <mat-label>WorkTime</mat-label>
-            <input matInput [matDatepicker]="picker" formControlName="period" />
-            @if(form.get('period')?.hasError('required') &&
-            form.get('period')?.touched){
-            <div class="error">WorkTime is required</div>
+            <mat-label>Work Time</mat-label>
+            <mat-select placeholder="From" formControlName="startYear">
+              @for(year of years;track year){
+              <mat-option [value]="year">{{ year }}</mat-option
+              >}
+            </mat-select>
+            @if(workExperiance.controls[i].get('startYear')?.hasError('required')
+            && workExperiance.controls[i].get('startYear')?.touched){
+            <div class="error">StartYear is required</div>
             }
-            <mat-datepicker-toggle
-              matIconSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <span>-</span>
+            <mat-select placeholder="To" formControlName="endYear">
+              @for(year of years;track year){
+              <mat-option [value]="year">{{ year }}</mat-option>
+              }
+            </mat-select>
+            @if(workExperiance.controls[i].get('endYear')?.hasError('required')
+            && workExperiance.controls[i].get('endYear')?.touched){
+            <div class="error">EndYear is required</div>
+            }
           </mat-form-field>
         </div>
         <button
