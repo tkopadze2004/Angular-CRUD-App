@@ -133,7 +133,7 @@
             <input matInput formControlName="workplace" />
             @if(workExperiance.controls[i].get('workplace')?.hasError('required')
             && workExperiance.controls[i].get('workplace')?.touched){
-            <div class="error">workExperiance is required</div>
+            <div class="error">workPlace is required</div>
             }
           </mat-form-field>
         </div>
@@ -149,7 +149,7 @@
         </div>
         <div [formGroupName]="i">
           <mat-form-field>
-            <mat-label>Work Time</mat-label>
+            <mat-label>Work Period</mat-label>
             <mat-select placeholder="From" formControlName="startYear">
               @for(year of years;track year){
               <mat-option [value]="year">{{ year }}</mat-option
